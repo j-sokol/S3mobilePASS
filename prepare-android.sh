@@ -9,6 +9,7 @@ python2 setup.py install
 touch ~/.bashrc
 
 
+# Create alias p and pass
 WRAPPER_FILE=`realpath passer-wrapper-android.sh`
-
 echo "alias pass=\"bash $WRAPPER_FILE\"" >> ~/.bashrc
+echo "alias p=\"bash $WRAPPER_FILE\"" >> ~/.bashrc
