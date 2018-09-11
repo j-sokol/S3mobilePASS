@@ -1,7 +1,7 @@
-MobilePASSER
+S3mobilePASS
 ============
 
-MobilePASSER is a reimplementation of the MobilePASS client in Python.
+Wrapper of MobilePASSER that saves config to AWS S3. MobilePASSER is a reimplementation of the MobilePASS client in Python.
 
 Installation
 ------------
