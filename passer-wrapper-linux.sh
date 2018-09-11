@@ -20,5 +20,4 @@ echo -n `$BASEDIR/mobilepasser/mobilepasser.py | xsel -b -i
 xdotool sleep 0.5 key --clearmodifiers "ctrl+v"; > ${LOG}
 
 # Upload config back to S3
-
 aws s3 cp "${CONF_PATH}/${CONF_FILE}" "s3://${BUCKET_NAME}/${CONF_FILE}" > ${LOG}
