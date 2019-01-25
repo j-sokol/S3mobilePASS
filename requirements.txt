@@ -1,1 +1,4 @@
 bitstring==3.1.4
+ConfigParser
+boto3
+botocore
