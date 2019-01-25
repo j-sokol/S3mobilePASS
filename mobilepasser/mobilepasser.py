@@ -5,7 +5,7 @@ import argparse
 import os
 import sys
 
-import ConfigParser
+import configparser
 
 from utils.activation_code import InvalidActivationKey, MissingActivationKey
 from utils.token_generation import generate_mobilepass_token
@@ -32,7 +32,7 @@ parser.add_argument('-a', '--auto-update-index', action="store_true",
                     help='Automatically bump the index by 1 and save to config file.')
 
 args = parser.parse_args()
-Config = ConfigParser.ConfigParser({
+Config = configparser.ConfigParser({
     'index': str(INDEX),
     'policy': POLICY,
     'otp_length': str(LENGTH),
@@ -66,14 +66,14 @@ def main():
         sys.exit(1)
 
     try:
-        print generate_mobilepass_token(key, int(index), policy, int(length))
+        print (generate_mobilepass_token(key, int(index), policy, int(length)))
     except (InvalidActivationKey, MissingActivationKey) as e:
         sys.stderr.write(e.message + '\n')
         sys.exit(1)
 
     # Increment the index and save to config if the auto_update_index flag is set
     if update:
-        Config.set('MobilePASS', 'index', int(index) + 1)
+        Config.set('MobilePASS', 'index', "{}".format(int(index) + 1))
         cfgfile = open(args.config_file, 'w')
         Config.write(cfgfile)
         cfgfile.close()

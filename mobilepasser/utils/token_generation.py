@@ -1,4 +1,4 @@
-# coding=utf-8
+	# coding=utf-8
 
 import array
 import base64
@@ -6,7 +6,7 @@ import hashlib
 import hmac
 import sys
 
-from activation_code import ActivationCode
+from .activation_code import ActivationCode
 
 # I ported the KDF1 algorithm from the bouncycastle library that shipped with
 # the app as the python libraries that included this function seemed to be
@@ -32,10 +32,10 @@ def KDF1(hash, secret, iv, start_position, key_length): #key should be passed by
 		# only preserves the last byte. So it needed to do some bit math to preserve the whole
 		# counter. This is what we're trying to replicate here.
 		# See: http://stackoverflow.com/questions/2458495/how-are-integers-casted-to-bytes-in-java
-		hash.update(bytes(chr((counter >> 24) & 0xff)))
-		hash.update(bytes(chr((counter >> 16) & 0xff)))
-		hash.update(bytes(chr((counter >> 8) & 0xff)))
-		hash.update(bytes(chr(counter & 0xff)))
+		hash.update(bytes(chr((counter >> 24) & 0xff).encode('ascii', errors='replace')))
+		hash.update(bytes(chr((counter >> 16) & 0xff).encode('ascii', errors='replace')))
+		hash.update(bytes(chr((counter >> 8) & 0xff).encode('ascii', errors='replace')))
+		hash.update(bytes(chr(counter & 0xff).encode('ascii', errors='replace')))
 
 		if iv != "":
 			hash.update(iv)
@@ -74,10 +74,12 @@ def long_to_byte_array(long_num):
     return byte_array
 
 def truncated_value(h):
-    bytes = bytearray(h.decode("hex"))
-    offset = bytes[-1] & 0xf
-    v = (bytes[offset] & 0x7f) << 24 | (bytes[offset+1] & 0xff) << 16 | \
-            (bytes[offset+2] & 0xff) << 8 | (bytes[offset+3] & 0xff)
+    # bytes = bytearray(h.decode("hex"))
+    bytes1 = bytes.fromhex(h)
+    # bytes = bytearray(h.hex())
+    offset = bytes1[-1] & 0xf
+    v = (bytes1[offset] & 0x7f) << 24 | (bytes1[offset+1] & 0xff) << 16 | \
+            (bytes1[offset+2] & 0xff) << 8 | (bytes1[offset+3] & 0xff)
     return v
 
 def generate_mobilepass_token(activation_key, index, policy='', length=6):

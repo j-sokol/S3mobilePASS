@@ -1,8 +1,13 @@
 import hashlib
 
-import base32
-import base32_checksum
-from activation_payload_v1 import ActivationPayloadV1
+# import base32
+# import base32_checksum
+
+
+from .base32 import *
+from .base32_checksum import *
+
+from .activation_payload_v1 import ActivationPayloadV1
 
 
 class InvalidActivationKey(Exception):
@@ -31,7 +36,7 @@ class ActivationCode:
 			if not code:
 				raise InvalidActivationKey("Invalid activation key")
 
-			value = base32.decode(code)
+			value = base32_decode(code)
 
 			if len(value) < 100:
 				raise InvalidActivationKey("Invalid activation key")
@@ -44,10 +49,10 @@ class ActivationCode:
 
 
 	def isValidLegacyActivationCode(self, code):
-		normalized_code = base32_checksum.validateAndNormalize(code)
+		normalized_code = validateAndNormalize(code)
 
 		if len(normalized_code) == 16:
-			self.entropy = base32.decode(normalized_code)
+			self.entropy = base32_decode(normalized_code)
 
 			if (len(self.entropy) == 80):
 				return True
@@ -59,7 +64,7 @@ class ActivationCode:
 		normalized_code = ""
 
 		for character in string:
-			if base32.isBase32Character(character):
+			if isBase32Character(character):
 				normalized_code += character
 
 		return normalized_code

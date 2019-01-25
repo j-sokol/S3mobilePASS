@@ -1,4 +1,4 @@
-import base32
+from .base32 import *
 
 def validateAndNormalize(encoded_string):
 	if len(encoded_string.strip()) == 0:
@@ -9,11 +9,11 @@ def validateAndNormalize(encoded_string):
 
 	index = -1
 	for character in encoded_string:
-		if not base32.isBase32Character(character):
+		if not isBase32Character(character):
 			continue
 
 		index = index + 1
-		character_value = base32.characterValue(character)
+		character_value = base32_characterValue(character)
 		ordinal_value = ord(character.upper())
 		if ordinal_value == 48:
 			ordinal_value = 79
