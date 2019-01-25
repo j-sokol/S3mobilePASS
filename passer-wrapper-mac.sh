@@ -12,7 +12,7 @@ fi
 aws s3 cp s3://${BUCKET_NAME}/${CONF_FILE} ${CONF_PATH}/${CONF_FILE}
 
 # Generate token
-$BASEDIR/mobilepasser/mobilepasser.py
+python3 $BASEDIR/mobilepasser/mobilepasser.py
 
 
 # Upload config back to S3
