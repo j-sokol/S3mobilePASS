@@ -3,6 +3,10 @@ S3mobilePASS
 
 Wrapper of MobilePASSER that saves config to AWS S3. MobilePASSER is a reimplementation of the MobilePASS client in Python.
 
+A fork from [https://github.com/datr/MobilePASSER](datr), with added backend mode in S3 bucket. This way you can just specify S3 bucket and have configuration synchronized on all your devices.
+
+Also added support for Python 3 (3.6+).
+
 Installation
 ------------
 
@@ -35,3 +39,24 @@ optional arguments:
 Configuration
 -------------
 The configuration file is read form `~/.mobilepasser.cfg`. An example config file can be found in the examples folder.
+```
+[MobilePASS]
+activation_key = *key*
+policy =
+index = 1
+otp_length = 6
+auto_update_index = True
+s3_bucket_name = *bucket name in your AWS account*
+load_from_s3 = True
+```
+
+If you use S3 bucket as your backup, you need to have your AWS-cli credentials set up in `~/.aws/`. This can be set up by installing `awscli`:
+
+```
+python3 -m pip install awscli
+
+aws configure
+```
+
+Also S3 bucket needs to be already created in your AWS account.
+
