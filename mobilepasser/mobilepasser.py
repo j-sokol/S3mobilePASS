@@ -44,7 +44,8 @@ Config = configparser.ConfigParser({
     'policy': POLICY,
     'otp_length': str(LENGTH),
     'auto_update_index': str(UPDATE),
-    'load_from_s3': str(False)
+    'load_from_s3': str(False),
+    'awscli_profile': 'default'
 })
 
 
@@ -69,6 +70,7 @@ def main():
         update = Config.getboolean('MobilePASS', 'auto_update_index')
         load_from_s3 = Config.getboolean('MobilePASS', 'load_from_s3')
         s3_bucket_name = Config.get('MobilePASS', 's3_bucket_name')
+        awscli_profile = Config.get('MobilePASS', 'awscli_profile')
 
 
     key = args.activation_key or key
@@ -84,7 +86,8 @@ def main():
             sys.exit(1)
 
         # load config from s3
-        s3 = boto3.resource('s3')
+        session = boto3.session.Session(profile_name=awscli_profile)
+        s3 = session.resource('s3')
 
         try:
             s3.Bucket(s3_bucket_name).download_file(CONFIG_FILE_NAME, CONFIG_FILE)
