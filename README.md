@@ -48,6 +48,7 @@ otp_length = 6
 auto_update_index = True
 s3_bucket_name = *bucket name in your AWS account*
 load_from_s3 = True
+awscli_profile = default
 ```
 
 If you use S3 bucket as your backup, you need to have your AWS-cli credentials set up in `~/.aws/`. This can be set up by installing `awscli`:
