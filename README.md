@@ -55,9 +55,11 @@ If you use S3 bucket as your backup, you need to have your AWS-cli credentials s
 
 ```
 python3 -m pip install awscli
-
+```
+Then configure the access:
+```
 aws configure
 ```
 
-Also S3 bucket needs to be already created in your AWS account.
+A S3 bucket spicified in the config needs to be already created in your AWS account.
 
